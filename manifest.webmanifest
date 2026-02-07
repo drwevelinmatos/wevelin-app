@@ -1,10 +1,12 @@
 {
-  "name": "Dr. Wevelin Matos",
+  "name": "Dr. Wevelin – Pediatria & Cardiologia Pediátrica",
   "short_name": "Dr. Wevelin",
-  "start_url": "./",
+  "start_url": "/wevelin-app/",
+  "scope": "/wevelin-app/",
   "display": "standalone",
   "background_color": "#FFFFFF",
   "theme_color": "#285A81",
+  "description": "Conteúdos educativos em pediatria e cardiologia pediátrica, com acesso rápido ao agendamento.",
   "icons": [
     { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png" }
