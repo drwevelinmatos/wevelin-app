@@ -86,10 +86,10 @@ h1,h2,.brand-title{
   .hero-card{ grid-template-columns: 360px 1fr; }
   .hero-photo{ height: 100%; min-height: 360px; }
   .grid-2{ grid-template-columns: 1fr 1fr; }
-}
+}0
 
 .info-box{
-  background: #fff;
+  0background: #fff;
   border:1px solid var(--line);
   border-radius: 16px;
   padding: 12px;
@@ -285,14 +285,14 @@ h1,h2,.brand-title{
 @media (min-width: 900px){
   .hero-card{
     display: grid;
-    grid-template-columns: minmax(280px, 360px) 1fr; /* FOTO | TEXTO */
+    grid-template-columns: minmax(320px, 440px) 1fr; /* FOTO | TEXTO */
     gap: 18px;
     align-items: start;
   }
 
   .hero-photo{
     width: 100%;
-    max-width: 360px;  /* aumenta o espaço da foto */
+    max-width: 440px;  /* aumenta o espaço da foto */
     aspect-ratio: 3 / 4; /* mantém proporção “retrato” */
     height: auto;
     border-radius: 16px;
@@ -311,4 +311,5 @@ h1,h2,.brand-title{
     border-radius: 16px;
   }
 }
+
 
