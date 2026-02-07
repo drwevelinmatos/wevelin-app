@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#285A81" />
+  <title>Dr. Wevelin Matos</title>
+
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="assets/icon-192.png" />
+  <link rel="apple-touch-icon" href="assets/icon-192.png" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Fontes (Comfortaa + alternativa ao Gotham) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <img class="brand-logo" src="assets/logo.png" alt="Logo Dr. Wevelin Matos" />
+      <div class="brand-text">
+        <div class="brand-title">Dr. Wevelin Matos</div>
+        <div class="brand-subtitle">pediatria e cardiologia pediátrica</div>
+      </div>
+    </div>
+
+    <button id="btnAdmin" class="icon-btn" aria-label="Admin" title="Admin">
+      ⚙️
+    </button>
+  </header>
+
+  <main class="app">
+    <!-- HOME -->
+    <section class="screen active" id="screen-home" data-title="Início">
+      <div class="hero">
+        <div class="hero-card">
+          <img class="hero-photo" src="assets/foto.jpg" alt="Foto da médica" />
+          <div class="hero-info">
+            <h1>Bem-vindo(a)</h1>
+            <p class="muted">
+              Aqui você encontra conteúdos e orientações gerais em pediatria, além de acesso rápido ao agendamento.
+            </p>
+
+            <div class="grid-2">
+              <div class="info-box">
+                <div class="info-label">Sobre mim</div>
+                <div class="info-value" id="aboutMe">
+                  <!-- Você pode editar em data.js -->
+                </div>
+              </div>
+
+              <div class="info-box">
+                <div class="info-label">Contato</div>
+                <div class="info-value">
+                  <div><strong>WhatsApp:</strong> <span id="whatsLabel"></span></div>
+                  <div><strong>E-mail:</strong> <span id="emailLabel"></span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <nav class="menu">
+          <button class="menu-btn" data-go="temas">
+            <div class="menu-ico">📚</div>
+            <div class="menu-txt">
+              <div class="menu-title">Temas</div>
+              <div class="menu-sub">Artigos e orientações</div>
+            </div>
+          </button>
+
+          <button class="menu-btn" data-go="tabelas">
+            <div class="menu-ico">📊</div>
+            <div class="menu-txt">
+              <div class="menu-title">Tabelas</div>
+              <div class="menu-sub">Referências rápidas</div>
+            </div>
+          </button>
+
+          <button class="menu-btn" data-go="duvidas">
+            <div class="menu-ico">💬</div>
+            <div class="menu-txt">
+              <div class="menu-title">Dúvidas</div>
+              <div class="menu-sub">Enviar mensagem</div>
+            </div>
+          </button>
+
+          <button class="menu-btn" data-go="agendamento">
+            <div class="menu-ico">📅</div>
+            <div class="menu-txt">
+              <div class="menu-title">Agendamento</div>
+              <div class="menu-sub">WhatsApp da clínica</div>
+            </div>
+          </button>
+	
+	  <button class="menu-btn" data-go="termos">
+  	    <div class="menu-ico">🛡️</div>
+  	    <div class="menu-txt">
+  	      <div class="menu-title">Aviso Legal</div>
+	      <div class="menu-sub">Termos e uso</div>
+  	  </div>
+	  </button>
+        </nav>
+      </div>
+    </section>
+
+    <!-- TEMAS -->
+    <section class="screen" id="screen-temas" data-title="Temas">
+      <div class="screen-head">
+        <button class="back-btn" data-back>←</button>
+        <div>
+          <h2>Temas</h2>
+          <div class="muted">Toque em um item para abrir.</div>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <input id="searchTemas" class="search" placeholder="Buscar tema..." />
+      </div>
+
+      <div id="listTemas" class="list"></div>
+    </section>
+
+    <!-- TABELAS -->
+    <section class="screen" id="screen-tabelas" data-title="Tabelas">
+      <div class="screen-head">
+        <button class="back-btn" data-back>←</button>
+        <div>
+          <h2>Tabelas</h2>
+          <div class="muted">Toque em um item para abrir.</div>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <input id="searchTabelas" class="search" placeholder="Buscar tabela..." />
+      </div>
+
+      <div id="listTabelas" class="list"></div>
+    </section>
+
+    <!-- DÚVIDAS -->
+    <section class="screen" id="screen-duvidas" data-title="Dúvidas">
+      <div class="screen-head">
+        <button class="back-btn" data-back>←</button>
+        <div>
+          <h2>Dúvidas</h2>
+          <div class="muted">Envie sua mensagem por e-mail ou WhatsApp.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <label class="label">Mensagem</label>
+        <textarea id="msgBox" class="textarea" rows="6" placeholder="Digite sua dúvida aqui..."></textarea>
+
+        <div class="row">
+          <button id="btnSendEmail" class="btn">Enviar por e-mail</button>
+          <button id="btnSendWhats" class="btn btn-secondary">Enviar por WhatsApp</button>
+        </div>
+
+        <p class="hint">
+          Observação: este canal não substitui consulta médica e pode ter tempo de resposta variável.
+          Em urgência, procure pronto atendimento.
+        </p>
+      </div>
+    </section>
+
+    <!-- AGENDAMENTO -->
+    <section class="screen" id="screen-agendamento" data-title="Agendamento">
+      <div class="screen-head">
+        <button class="back-btn" data-back>←</button>
+        <div>
+          <h2>Agendamento</h2>
+          <div class="muted">Abrirá o WhatsApp para marcar consulta.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="muted">
+          Clique no botão abaixo para falar com a equipe e agendar sua consulta.
+        </p>
+        <button id="btnAgendar" class="btn btn-cta">Abrir WhatsApp de agendamento</button>
+      </div>
+    </section>
+<!-- AVISO LEGAL / TERMOS / PRIVACIDADE -->
+<section class="screen" id="screen-termos" data-title="Aviso Legal">
+  <div class="screen-head">
+    <button class="back-btn" data-back>←</button>
+    <div>
+      <h2>Aviso Legal, Privacidade e Termos</h2>
+      <div class="muted">Leitura rápida e objetiva.</div>
+    </div>
+  </div>
+
+  <article class="card content">
+    <h3>1) Finalidade do aplicativo</h3>
+    <p>
+      Este aplicativo tem finalidade <strong>exclusivamente educativa</strong>, oferecendo
+      informações gerais em pediatria para orientação de pais e responsáveis.
+    </p>
+
+    <h3>2) Não substitui consulta médica</h3>
+    <p>
+      As informações aqui disponibilizadas <strong>não substituem consulta médica presencial</strong>,
+      diagnóstico, prescrição de medicamentos ou acompanhamento clínico individualizado.
+    </p>
+
+    <h3>3) Situações de urgência</h3>
+    <p>
+      Em casos de urgência ou emergência — como dificuldade para respirar, convulsão,
+      prostração importante, sinais de desidratação ou qualquer piora clínica —
+      procure <strong>pronto atendimento</strong> imediatamente.
+    </p>
+
+    <h3>4) Política de Privacidade (LGPD)</h3>
+    <p>
+      Este aplicativo <strong>não coleta dados pessoais automaticamente</strong>.
+      As informações só são compartilhadas quando o próprio usuário
+      entra em contato voluntariamente por e-mail ou WhatsApp.
+    </p>
+    <p>
+      Não armazenamos, tratamos ou compartilhamos dados pessoais para fins comerciais.
+      Os dados enviados são utilizados apenas para fins de comunicação e orientação.
+    </p>
+
+    <h3>5) Consentimento para contato</h3>
+    <p>
+      Ao utilizar os canais de contato (e-mail ou WhatsApp), o usuário
+      <strong>autoriza o recebimento de respostas</strong> relacionadas à sua mensagem,
+      ciente de que esses canais não substituem consulta médica.
+    </p>
+
+    <h3>6) Limitações de responsabilidade</h3>
+    <p>
+      O autor do aplicativo não se responsabiliza por decisões tomadas com base
+      exclusiva nas informações aqui apresentadas, sem avaliação médica adequada.
+    </p>
+
+    <h3>7) Direitos autorais</h3>
+    <p>
+      Todo o conteúdo, identidade visual e textos são de uso profissional.
+      A reprodução sem autorização não é permitida.
+    </p>
+
+    <div class="accept-box">
+      <label class="accept-label">
+        <input type="checkbox" id="acceptTerms" />
+        Declaro que li e concordo com os termos acima.
+      </label>
+
+     <button id="btnAcceptTerms" class="btn btn-cta" disabled>
+  Li e concordo
+</button>
+<div id="termsStatus" class="muted small" style="margin-top:10px;"></div>
+
+    </div>
+
+    <p class="muted small">
+      Última atualização: 07/02/2026<br>
+      Dr. Wevelin Matos – CRM-SP 196372
+    </p>
+  </article>
+</section>
+
+    <!-- DETALHE (Tema/Tabela) -->
+    <section class="screen" id="screen-detail" data-title="Conteúdo">
+      <div class="screen-head">
+        <button class="back-btn" data-back>←</button>
+        <div>
+          <h2 id="detailTitle">Conteúdo</h2>
+          <div class="muted" id="detailMeta"></div>
+        </div>
+      </div>
+
+      <article class="card content" id="detailBody"></article>
+    </section>
+  </main>
+
+  <!-- MODAL ADMIN -->
+  <div class="modal" id="adminModal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div class="modal-title">Admin</div>
+        <button class="icon-btn" id="btnCloseAdmin" aria-label="Fechar">✕</button>
+      </div>
+
+      <div id="adminGate" class="stack">
+        <div class="muted">Digite o PIN para editar conteúdos neste aparelho.</div>
+        <input id="adminPin" class="input" placeholder="PIN" inputmode="numeric" />
+        <button id="btnEnterAdmin" class="btn">Entrar</button>
+      </div>
+
+      <div id="adminPanel" class="stack hidden">
+        <div class="pill-row">
+          <button class="pill active" data-admin-tab="temas">Temas</button>
+          <button class="pill" data-admin-tab="tabelas">Tabelas</button>
+          <button class="pill" data-admin-tab="backup">Backup</button>
+        </div>
+
+        <div id="adminTab-temas" class="admin-tab">
+          <div class="row">
+            <input id="admTemaTitulo" class="input" placeholder="Título do tema" />
+            <input id="admTemaTags" class="input" placeholder="Tags (separadas por vírgula)" />
+          </div>
+          <textarea id="admTemaHtml" class="textarea" rows="7" placeholder="Conteúdo em HTML simples (ex.: <p>...</p><ul>...</ul>)"></textarea>
+          <button id="btnAddTema" class="btn">Adicionar tema</button>
+          <div class="muted small">Dica: você pode colar texto e usar &lt;p&gt; e &lt;ul&gt; para organizar.</div>
+        </div>
+
+        <div id="adminTab-tabelas" class="admin-tab hidden">
+          <div class="row">
+            <input id="admTabTitulo" class="input" placeholder="Título da tabela" />
+            <input id="admTabTags" class="input" placeholder="Tags (separadas por vírgula)" />
+          </div>
+          <textarea id="admTabHtml" class="textarea" rows="7" placeholder="Conteúdo em HTML simples"></textarea>
+          <button id="btnAddTabela" class="btn">Adicionar tabela</button>
+        </div>
+
+        <div id="adminTab-backup" class="admin-tab hidden">
+          <button id="btnExport" class="btn btn-secondary">Exportar JSON (copiar)</button>
+          <textarea id="backupBox" class="textarea" rows="7" placeholder="Aqui aparecerá o JSON exportado. Para importar, cole o JSON e clique Importar."></textarea>
+          <div class="row">
+            <button id="btnImport" class="btn">Importar JSON</button>
+            <button id="btnReset" class="btn btn-danger">Limpar dados locais</button>
+          </div>
+          <div class="muted small">
+            O backup só afeta o que está salvo neste aparelho (localStorage).
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
