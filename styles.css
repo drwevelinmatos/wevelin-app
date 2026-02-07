@@ -311,6 +311,45 @@ h1,h2,.brand-title{
     border-radius: 16px;
   }
 }
+/* ===== HOME: layout em coluna (igual ao celular) também no desktop ===== */
+.hero-card{
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
 
+/* foto acima, central e com tamanho bonito no desktop */
+.hero-photo{
+  width: min(420px, 100%);
+  margin: 0 auto;
+  display: block;
+  border-radius: 18px;
+  object-fit: cover;
+}
 
+/* remove 2 colunas e empilha os boxes */
+.grid-2{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
 
+/* título "Bem-vindo" e texto centralizados e elegantes */
+.hero-info h1{
+  margin: 6px 0 4px 0;
+  text-align: center;
+}
+
+.hero-info .muted{
+  text-align: center;
+}
+
+/* link do instagram com cara de link "premium" */
+a.link{
+  color: var(--primary, #285A81);
+  text-decoration: none;
+  font-weight: 600;
+}
+a.link:hover{
+  text-decoration: underline;
+}
