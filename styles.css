@@ -292,7 +292,7 @@ h1,h2,.brand-title{
 
   .hero-photo{
     width: 100%;
-    max-width: 360px;  /* aumenta o espaço da foto */
+    max-width: 980px;  /* aumenta o espaço da foto */
     aspect-ratio: 3 / 4; /* mantém proporção “retrato” */
     height: auto;
     border-radius: 16px;
@@ -353,3 +353,4 @@ a.link{
 a.link:hover{
   text-decoration: underline;
 }
+
