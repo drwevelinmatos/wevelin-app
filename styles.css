@@ -273,3 +273,42 @@ h1,h2,.brand-title{
   border-color: var(--primary);
   color: var(--primary);
 }
+/* ===== Foto responsiva (desktop maior, mobile igual) ===== */
+.hero-photo{
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* Desktop: card em 2 colunas com foto maior */
+@media (min-width: 900px){
+  .hero-card{
+    display: grid;
+    grid-template-columns: minmax(280px, 360px) 1fr; /* FOTO | TEXTO */
+    gap: 18px;
+    align-items: start;
+  }
+
+  .hero-photo{
+    width: 100%;
+    max-width: 360px;  /* aumenta o espaço da foto */
+    aspect-ratio: 3 / 4; /* mantém proporção “retrato” */
+    height: auto;
+    border-radius: 16px;
+  }
+}
+
+/* Mobile: mantém layout confortável */
+@media (max-width: 899px){
+  .hero-card{
+    display: block; /* ou flex-col, dependendo do seu CSS atual */
+  }
+
+  .hero-photo{
+    max-width: 100%;
+    aspect-ratio: 4 / 3; /* pode ajustar se preferir mais “wide” no celular */
+    border-radius: 16px;
+  }
+}
+
