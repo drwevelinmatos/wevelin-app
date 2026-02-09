@@ -162,15 +162,21 @@
 
   function refreshUI() {
     const content = getContent();
-    const temas = content.temas || [];
-    const tabelas = content.tabelas || [];
+   return {
+  temas: merge(base.temas, local.temas),
+  tabelas: merge(base.tabelas, local.tabelas),
+  laser: merge(base.laser, local.laser),
+};
 
     const temasEl = $("#listTemas");
     const tabsEl = $("#listTabelas");
-
+    const laserEl = $("#listLaser");
+    
     renderList(temasEl, temas, "temas");
     renderList(tabsEl, tabelas, "tabelas");
-
+    renderList(laserEl, laser, "laser");
+    
+    applySearch($("#searchLaser"), laser, (f) => renderList(laserEl, f, "laser"));
     applySearch($("#searchTemas"), temas, (f) => renderList(temasEl, f, "temas"));
     applySearch($("#searchTabelas"), tabelas, (f) => renderList(tabsEl, f, "tabelas"));
   }
@@ -467,3 +473,4 @@
     });
   }
 })();
+
