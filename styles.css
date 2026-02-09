@@ -285,7 +285,7 @@ h1,h2,.brand-title{
 @media (min-width: 900px){
   .hero-card{
     display: grid;
-    grid-template-columns: minmax(280px, 980px) 1fr; /* FOTO | TEXTO */
+    grid-template-columns: minmax(320px, 980px) 1fr; /* FOTO | TEXTO */
     gap: 18px;
     align-items: start;
   }
@@ -353,5 +353,6 @@ a.link{
 a.link:hover{
   text-decoration: underline;
 }
+
 
 
