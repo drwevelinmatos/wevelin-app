@@ -82,6 +82,14 @@
             </div>
           </button>
 
+		  <button class="menu-btn" data-go="laser">
+            <div class="menu-ico">🔦</div>
+  			<div class="menu-txt">
+    		  <div class="menu-title">Laserterapia</div>
+    		  <div class="menu-sub">Orientações e protocolos</div>
+  		  </div>
+	      </button>
+
           <button class="menu-btn" data-go="duvidas">
             <div class="menu-ico">💬</div>
             <div class="menu-txt">
@@ -142,6 +150,23 @@
 
       <div id="listTabelas" class="list"></div>
     </section>
+
+	<!-- LASERTERAPIA -->
+<section class="screen" id="screen-laser" data-title="Laserterapia">
+  <div class="screen-head">
+    <button class="back-btn" data-back>←</button>
+    <div>
+      <h2>Laserterapia</h2>
+      <div class="muted">Conteúdo educativo. Toque para abrir.</div>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <input id="searchLaser" class="search" placeholder="Buscar..." />
+  </div>
+
+  <div id="listLaser" class="list"></div>
+</section>
 
     <!-- DÚVIDAS -->
     <section class="screen" id="screen-duvidas" data-title="Dúvidas">
@@ -339,6 +364,7 @@
   <script src="app.js"></script>
 </body>
 </html>
+
 
 
 
