@@ -46,6 +46,7 @@
     return {
       temas: merge(base.temas, local.temas),
       tabelas: merge(base.tabelas, local.tabelas),
+      laser: merge(base.laser, local.laser),
     };
   }
 
@@ -356,6 +357,7 @@
       if (!obj || typeof obj !== "object") throw new Error("inválido");
       if (!Array.isArray(obj.temas)) obj.temas = [];
       if (!Array.isArray(obj.tabelas)) obj.tabelas = [];
+      if (!Array.isArray(obj.laser)) obj.laser = [];
       saveLocal(obj);
       refreshUI();
       alert("Importado com sucesso!");
@@ -473,5 +475,6 @@
     });
   }
 })();
+
 
 
