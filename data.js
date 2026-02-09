@@ -488,54 +488,190 @@ laser: [
   {
     id: "laser-o-que-e",
     title: "Laserterapia: o que é e para que serve",
-    tags: ["introdução", "segurança"],
-    updatedAt: "2026-02-07",
+    tags: ["introdução", "fotobiomodulação"],
+    updatedAt: "2026-02-09",
     html: `
-      <p><strong>Laserterapia (fotobiomodulação)</strong> é uma técnica que utiliza luz em comprimentos de onda específicos para apoiar processos biológicos como <strong>alívio de dor</strong>, <strong>redução de inflamação</strong> e <strong>aceleração de cicatrização</strong>.</p>
+      <p><strong>Laserterapia</strong> (ou fotobiomodulação) é um recurso terapêutico que utiliza luz de baixa intensidade para estimular processos naturais do organismo.</p>
+
+      <p>Na pediatria, pode ser utilizada como <strong>tratamento complementar</strong>, com foco em:</p>
       <ul>
-        <li>Uso comum em: aftas, lesões de pele, feridas, dores musculoesqueléticas, inflamações localizadas (conforme avaliação).</li>
-        <li>É um recurso <strong>adjuvante</strong> (não substitui tratamento quando necessário).</li>
+        <li>Alívio de dor</li>
+        <li>Redução de inflamação</li>
+        <li>Aceleração da cicatrização</li>
+        <li>Melhora do conforto local</li>
       </ul>
-      <p class="muted small">Conteúdo educativo. Indicações e protocolos dependem de avaliação clínica.</p>
+
+      <p class="muted small">Conteúdo educativo. A indicação depende de avaliação individual.</p>
     `
   },
+
+  {
+    id: "laser-indicacoes",
+    title: "Principais indicações em pediatria",
+    tags: ["indicações", "pediatria"],
+    updatedAt: "2026-02-09",
+    html: `
+      <p>As indicações mais comuns da laserterapia em crianças incluem:</p>
+
+      <ul>
+        <li>Dermatite atópica e eczemas localizados</li>
+        <li>Assaduras e irritações de pele</li>
+        <li>Feridas superficiais e cicatrização</li>
+        <li>Aftas e lesões na boca</li>
+        <li>Herpes labial (fase inicial)</li>
+        <li>Dor musculoesquelética localizada</li>
+        <li>Inflamações leves de tecidos moles</li>
+      </ul>
+
+      <p class="muted small">A laserterapia não substitui outros tratamentos quando estes são necessários.</p>
+    `
+  },
+
+  {
+    id: "laser-pele",
+    title: "Laserterapia para pele: dermatite, assaduras e eczema",
+    tags: ["pele", "dermatite"],
+    updatedAt: "2026-02-09",
+    html: `
+      <p>Na pediatria, a laserterapia pode auxiliar no cuidado da pele, especialmente em situações inflamatórias.</p>
+
+      <h3>Possíveis benefícios</h3>
+      <ul>
+        <li>Diminuição da inflamação local</li>
+        <li>Redução da coceira</li>
+        <li>Auxílio na regeneração da pele</li>
+      </ul>
+
+      <p>É sempre associada a cuidados básicos como hidratação adequada da pele e orientação médica.</p>
+    `
+  },
+
+  {
+    id: "laser-lesoes",
+    title: "Feridas, cicatrização e pós-procedimentos",
+    tags: ["cicatrização", "lesões"],
+    updatedAt: "2026-02-09",
+    html: `
+      <p>A laserterapia pode ser utilizada como apoio no processo de cicatrização.</p>
+
+      <ul>
+        <li>Feridas superficiais</li>
+        <li>Fissuras de pele</li>
+        <li>Pós-procedimentos dermatológicos simples</li>
+      </ul>
+
+      <p class="muted small">O tipo de lesão, profundidade e risco de infecção precisam ser avaliados previamente.</p>
+    `
+  },
+
+  {
+    id: "laser-boca",
+    title: "Aftas, lesões orais e herpes labial",
+    tags: ["aftas", "herpes"],
+    updatedAt: "2026-02-09",
+    html: `
+      <p>Na região oral, a laserterapia pode ajudar principalmente no <strong>alívio da dor</strong>.</p>
+
+      <ul>
+        <li>Aftas recorrentes</li>
+        <li>Mucosite leve</li>
+        <li>Herpes labial em fase inicial</li>
+      </ul>
+
+      <p>O objetivo principal é melhorar o conforto da criança e facilitar alimentação e hidratação.</p>
+    `
+  },
+
+  {
+    id: "laser-dor",
+    title: "Dor musculoesquelética e inflamações localizadas",
+    tags: ["dor", "musculoesquelético"],
+    updatedAt: "2026-02-09",
+    html: `
+      <p>Em algumas situações, a laserterapia pode ser utilizada como recurso complementar no manejo da dor.</p>
+
+      <ul>
+        <li>Dores musculares localizadas</li>
+        <li>Inflamações leves após esforço ou trauma leve</li>
+      </ul>
+
+      <p class="muted small">Não substitui avaliação ortopédica quando indicada.</p>
+    `
+  },
+
   {
     id: "laser-seguranca",
-    title: "Segurança: quando evitar e cuidados gerais",
-    tags: ["segurança", "contraindicações"],
-    updatedAt: "2026-02-07",
+    title: "Segurança e cuidados importantes",
+    tags: ["segurança", "cuidados"],
+    updatedAt: "2026-02-09",
     html: `
       <h3>Cuidados gerais</h3>
       <ul>
-        <li>Uso com <strong>proteção ocular</strong> quando indicado.</li>
-        <li>Aplicação por profissional treinado e com parâmetros ajustados ao caso.</li>
+        <li>Procedimento realizado por profissional capacitado</li>
+        <li>Parâmetros ajustados à idade e condição clínica</li>
+        <li>Proteção ocular quando necessário</li>
       </ul>
 
-      <h3>Evitar / avaliar com cautela</h3>
+      <h3>Situações que exigem cautela</h3>
       <ul>
-        <li>Aplicação direta em olhos.</li>
-        <li>Lesões suspeitas (avaliar antes de tratar).</li>
-        <li>Áreas com sangramento ativo importante.</li>
-        <li>Gestação: depende de região/indicação (avaliar individualmente).</li>
+        <li>Lesões suspeitas sem diagnóstico</li>
+        <li>Infecções graves não tratadas</li>
+        <li>Áreas próximas aos olhos</li>
       </ul>
-
-      <p class="muted small">Em pediatria, a indicação deve ser individualizada e baseada em evidências para cada condição.</p>
     `
   },
+
   {
-    id: "laser-pos-procedimento",
-    title: "Orientações após sessão: o que esperar",
-    tags: ["orientações", "pós"],
-    updatedAt: "2026-02-07",
+    id: "laser-o-que-esperar",
+    title: "O que esperar durante e após a sessão",
+    tags: ["orientações", "sessão"],
+    updatedAt: "2026-02-09",
     html: `
       <ul>
-        <li>Em geral é um procedimento bem tolerado, sem necessidade de afastamento.</li>
-        <li>Pode haver <strong>leve vermelhidão</strong> temporária no local.</li>
-        <li>Siga as orientações de higiene/cremes/curativos quando prescritos.</li>
+        <li>Procedimento indolor ou com mínimo desconforto</li>
+        <li>Duração curta (alguns minutos)</li>
+        <li>Não invasivo</li>
       </ul>
-      <p class="muted small">Se houver dor intensa, secreção, piora importante ou febre, procure avaliação.</p>
+
+      <p>Após a sessão:</p>
+      <ul>
+        <li>Retorno imediato às atividades habituais</li>
+        <li>Eventual vermelhidão local leve e transitória</li>
+      </ul>
+    `
+  },
+
+  {
+    id: "laser-quando-nao-usar",
+    title: "Quando a laserterapia não é indicada",
+    tags: ["contraindicações"],
+    updatedAt: "2026-02-09",
+    html: `
+      <ul>
+        <li>Lesões sem diagnóstico definido</li>
+        <li>Sangramento ativo importante</li>
+        <li>Quando há necessidade de tratamento específico prioritário</li>
+      </ul>
+
+      <p class="muted small">A decisão deve sempre ser individualizada.</p>
+    `
+  },
+
+  {
+    id: "laser-alerta",
+    title: "Sinais de alerta após aplicação",
+    tags: ["alerta", "segurança"],
+    updatedAt: "2026-02-09",
+    html: `
+      <p>Procure avaliação médica se ocorrer:</p>
+      <ul>
+        <li>Piora importante da dor</li>
+        <li>Sinais de infecção (calor, secreção, febre)</li>
+        <li>Ausência de melhora após o período esperado</li>
+      </ul>
     `
   }
-],
+]
 };
+
 
