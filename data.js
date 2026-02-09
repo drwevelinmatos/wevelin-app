@@ -484,4 +484,58 @@ window.DEFAULT_CONTENT = {
       `,
     },
   ],
+laser: [
+  {
+    id: "laser-o-que-e",
+    title: "Laserterapia: o que é e para que serve",
+    tags: ["introdução", "segurança"],
+    updatedAt: "2026-02-07",
+    html: `
+      <p><strong>Laserterapia (fotobiomodulação)</strong> é uma técnica que utiliza luz em comprimentos de onda específicos para apoiar processos biológicos como <strong>alívio de dor</strong>, <strong>redução de inflamação</strong> e <strong>aceleração de cicatrização</strong>.</p>
+      <ul>
+        <li>Uso comum em: aftas, lesões de pele, feridas, dores musculoesqueléticas, inflamações localizadas (conforme avaliação).</li>
+        <li>É um recurso <strong>adjuvante</strong> (não substitui tratamento quando necessário).</li>
+      </ul>
+      <p class="muted small">Conteúdo educativo. Indicações e protocolos dependem de avaliação clínica.</p>
+    `
+  },
+  {
+    id: "laser-seguranca",
+    title: "Segurança: quando evitar e cuidados gerais",
+    tags: ["segurança", "contraindicações"],
+    updatedAt: "2026-02-07",
+    html: `
+      <h3>Cuidados gerais</h3>
+      <ul>
+        <li>Uso com <strong>proteção ocular</strong> quando indicado.</li>
+        <li>Aplicação por profissional treinado e com parâmetros ajustados ao caso.</li>
+      </ul>
+
+      <h3>Evitar / avaliar com cautela</h3>
+      <ul>
+        <li>Aplicação direta em olhos.</li>
+        <li>Lesões suspeitas (avaliar antes de tratar).</li>
+        <li>Áreas com sangramento ativo importante.</li>
+        <li>Gestação: depende de região/indicação (avaliar individualmente).</li>
+      </ul>
+
+      <p class="muted small">Em pediatria, a indicação deve ser individualizada e baseada em evidências para cada condição.</p>
+    `
+  },
+  {
+    id: "laser-pos-procedimento",
+    title: "Orientações após sessão: o que esperar",
+    tags: ["orientações", "pós"],
+    updatedAt: "2026-02-07",
+    html: `
+      <ul>
+        <li>Em geral é um procedimento bem tolerado, sem necessidade de afastamento.</li>
+        <li>Pode haver <strong>leve vermelhidão</strong> temporária no local.</li>
+        <li>Siga as orientações de higiene/cremes/curativos quando prescritos.</li>
+      </ul>
+      <p class="muted small">Se houver dor intensa, secreção, piora importante ou febre, procure avaliação.</p>
+    `
+  }
+],
 };
+
