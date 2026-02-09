@@ -33,7 +33,7 @@
 
   function getContent() {
     const local = loadLocal();
-    const base = structuredClone(DEFAULT_CONTENT || { temas: [], tabelas: [] });
+    const base = structuredClone(DEFAULT_CONTENT || { temas: [], tabelas: [], laser: [] });
 
     if (!local) return base;
 
@@ -290,7 +290,7 @@
   function ensureLocalContainer() {
     const local = loadLocal();
     if (local) return local;
-    const fresh = { temas: [], tabelas: [] };
+    const fresh = { temas: [], tabelas: [], laser: [] };
     saveLocal(fresh);
     return fresh;
   }
@@ -473,4 +473,5 @@
     });
   }
 })();
+
 
