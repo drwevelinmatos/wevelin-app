@@ -1,4 +1,4 @@
-const CACHE_NAME = "wevelin-app-v1.0";
+const CACHE_NAME = "wevelin-app-v1.1";
 const ASSETS = [
   "./",
   "./index.html",
@@ -33,3 +33,4 @@ self.addEventListener("fetch", (event) => {
     caches.match(event.request).then((cached) => cached || fetch(event.request))
   );
 });
+
