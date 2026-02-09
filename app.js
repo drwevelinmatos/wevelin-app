@@ -8,8 +8,19 @@
   // =========================
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
-      navigator.serviceWorker.register("service-worker.js").catch(() => {});
+      navigator.serviceWorker.register("./service-worker.js").catch(() => {});
     });
+  }
+
+  // =========================
+  // Util: clone seguro (sem structuredClone)
+  // =========================
+  function safeClone(obj) {
+    try {
+      return JSON.parse(JSON.stringify(obj ?? {}));
+    } catch {
+      return {};
+    }
   }
 
   // =========================
@@ -31,22 +42,33 @@
     localStorage.setItem(LS_KEY, JSON.stringify(data));
   }
 
+  function mergeById(baseArr, localArr) {
+    const m = new Map((baseArr || []).map((x) => [x.id, x]));
+    for (const item of localArr || []) m.set(item.id, item);
+    return Array.from(m.values()).sort((a, b) => (a.title || "").localeCompare(b.title || ""));
+  }
+
   function getContent() {
     const local = loadLocal();
-    const base = structuredClone(DEFAULT_CONTENT || { temas: [], tabelas: [], laser: [] });
+    const base = safeClone(DEFAULT_CONTENT || {});
 
-    if (!local) return base;
+    // garante arrays
+    base.temas = Array.isArray(base.temas) ? base.temas : [];
+    base.tabelas = Array.isArray(base.tabelas) ? base.tabelas : [];
+    base.laser = Array.isArray(base.laser) ? base.laser : [];
 
-    const merge = (arrBase, arrLocal) => {
-      const m = new Map((arrBase || []).map((x) => [x.id, x]));
-      for (const item of arrLocal || []) m.set(item.id, item);
-      return Array.from(m.values()).sort((a, b) => (a.title || "").localeCompare(b.title || ""));
-    };
+    if (!local) {
+      return { temas: base.temas, tabelas: base.tabelas, laser: base.laser };
+    }
+
+    local.temas = Array.isArray(local.temas) ? local.temas : [];
+    local.tabelas = Array.isArray(local.tabelas) ? local.tabelas : [];
+    local.laser = Array.isArray(local.laser) ? local.laser : [];
 
     return {
-      temas: merge(base.temas, local.temas),
-      tabelas: merge(base.tabelas, local.tabelas),
-      laser: merge(base.laser, local.laser),
+      temas: mergeById(base.temas, local.temas),
+      tabelas: mergeById(base.tabelas, local.tabelas),
+      laser: mergeById(base.laser, local.laser),
     };
   }
 
@@ -77,37 +99,29 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  // deixa acessível (para o módulo de termos)
+  // expõe para outros módulos (termos)
   window.showScreen = showScreen;
   window.goBack = goBack;
 
-  // Listeners de navegação
-  $$("[data-go]").forEach((btn) => {
-    btn.addEventListener("click", () => showScreen(btn.getAttribute("data-go")));
-  });
-  $$("[data-back]").forEach((btn) => btn.addEventListener("click", goBack));
-
-  // =========================
-  // Header / Labels
-  // =========================
-  function formatWhatsLabel(num) {
-    if (!num) return "";
-    return "+" + num;
+  // listeners de navegação (botões data-go e data-back)
+  function bindNav() {
+    $$("[data-go]").forEach((btn) => {
+      btn.addEventListener("click", () => showScreen(btn.getAttribute("data-go")));
+    });
+    $$("[data-back]").forEach((btn) => btn.addEventListener("click", goBack));
   }
-
-  const aboutEl = $("#aboutMe");
-  const whatsEl = $("#whatsLabel");
-  const emailEl = $("#emailLabel");
-
-  if (aboutEl) aboutEl.textContent = (APP_CONFIG?.aboutMe || "");
-  if (whatsEl) whatsEl.textContent = formatWhatsLabel(APP_CONFIG?.whatsappNumber || "");
-  if (emailEl) emailEl.textContent = (APP_CONFIG?.email || "");
+  bindNav();
 
   // =========================
-  // Renderização de listas
+  // Preencher HOME (sobre mim)
+  // =========================
+  $("#aboutMe") && ($("#aboutMe").textContent = APP_CONFIG?.aboutMe || "");
+
+  // =========================
+  // Renderização de listas (Temas/Tabelas/Laser)
   // =========================
   function escapeHtml(s) {
-    return String(s)
+    return String(s ?? "")
       .replaceAll("&", "&amp;")
       .replaceAll("<", "&lt;")
       .replaceAll(">", "&gt;")
@@ -115,20 +129,20 @@
       .replaceAll("'", "&#039;");
   }
 
-  function openDetail(item, kind) {
+  function openDetail(item, kindLabel) {
     $("#detailTitle").textContent = item.title || "Conteúdo";
     $("#detailMeta").textContent =
-      `${kind === "temas" ? "Tema" : "Tabela"}${item.updatedAt ? " • Atualizado: " + item.updatedAt : ""}`;
+      `${kindLabel}${item.updatedAt ? " • Atualizado: " + item.updatedAt : ""}`;
     $("#detailBody").innerHTML = item.html || "<p class='muted'>Sem conteúdo.</p>";
     showScreen("detail");
   }
 
-  function renderList(container, items, kind) {
+  function renderList(container, items, kindLabel) {
     if (!container) return;
-    container.innerHTML = "";
 
-    if (!items || !items.length) {
-      container.innerHTML = `<div class="card muted">Nenhum item ainda.</div>`;
+    container.innerHTML = "";
+    if (!items || items.length === 0) {
+      container.innerHTML = `<div class="card muted">Nenhum item disponível.</div>`;
       return;
     }
 
@@ -136,25 +150,31 @@
       const div = document.createElement("div");
       div.className = "item";
       div.innerHTML = `
-        <div class="item-title">${escapeHtml(it.title || "")}</div>
+        <div class="item-title">${escapeHtml(it.title)}</div>
         <div class="item-meta">
           ${escapeHtml((it.tags || []).join(" • "))}
           ${it.updatedAt ? " • Atualizado: " + escapeHtml(it.updatedAt) : ""}
         </div>
       `;
-      div.addEventListener("click", () => openDetail(it, kind));
+      div.addEventListener("click", () => openDetail(it, kindLabel));
       container.appendChild(div);
     }
   }
 
-  function applySearch(inputEl, items, renderFn) {
+  function wireSearch(inputEl, items, renderFn) {
     if (!inputEl) return;
     inputEl.addEventListener("input", () => {
       const q = inputEl.value.trim().toLowerCase();
       const filtered = !q
         ? items
         : items.filter((x) => {
-            const hay = (x.title + " " + (x.tags || []).join(" ") + " " + (x.html || "")).toLowerCase();
+            const hay = (
+              (x.title || "") +
+              " " +
+              (x.tags || []).join(" ") +
+              " " +
+              (x.html || "")
+            ).toLowerCase();
             return hay.includes(q);
           });
       renderFn(filtered);
@@ -163,86 +183,54 @@
 
   function refreshUI() {
     const content = getContent();
-   return {
-  temas: merge(base.temas, local.temas),
-  tabelas: merge(base.tabelas, local.tabelas),
-  laser: merge(base.laser, local.laser),
-};
 
+    // TEMAS
+    const temas = content.temas || [];
     const temasEl = $("#listTemas");
-    const tabsEl = $("#listTabelas");
+    renderList(temasEl, temas, "Tema");
+    wireSearch($("#searchTemas"), temas, (f) => renderList(temasEl, f, "Tema"));
+
+    // TABELAS
+    const tabelas = content.tabelas || [];
+    const tabelasEl = $("#listTabelas");
+    renderList(tabelasEl, tabelas, "Tabela");
+    wireSearch($("#searchTabelas"), tabelas, (f) => renderList(tabelasEl, f, "Tabela"));
+
+    // LASER
+    const laser = content.laser || [];
     const laserEl = $("#listLaser");
-    
-    renderList(temasEl, temas, "temas");
-    renderList(tabsEl, tabelas, "tabelas");
-    renderList(laserEl, laser, "laser");
-    
-    applySearch($("#searchLaser"), laser, (f) => renderList(laserEl, f, "laser"));
-    applySearch($("#searchTemas"), temas, (f) => renderList(temasEl, f, "temas"));
-    applySearch($("#searchTabelas"), tabelas, (f) => renderList(tabsEl, f, "tabelas"));
+    renderList(laserEl, laser, "Laserterapia");
+    wireSearch($("#searchLaser"), laser, (f) => renderList(laserEl, f, "Laserterapia"));
   }
 
-  refreshUI();
+  document.addEventListener("DOMContentLoaded", refreshUI);
 
   // =========================
-  // Dúvidas: Email / WhatsApp
+  // Dúvidas (WhatsApp)
   // =========================
   function buildWhatsLink(number, text) {
     if (!number) return null;
-    const msg = encodeURIComponent(text || "");
-    return `https://wa.me/${number}?text=${msg}`;
+    return `https://wa.me/${number}?text=${encodeURIComponent(text || "")}`;
   }
 
-  function buildMailto(email, subject, body) {
-    if (!email) return null;
-    const s = encodeURIComponent(subject || "");
-    const b = encodeURIComponent(body || "");
-    return `mailto:${email}?subject=${s}&body=${b}`;
-  }
-
-  const btnSendEmail = $("#btnSendEmail");
-  const btnSendWhats = $("#btnSendWhats");
-  const msgBox = $("#msgBox");
-
-  if (btnSendEmail) {
-    btnSendEmail.addEventListener("click", () => {
-      const msg = (msgBox?.value || "").trim();
-      const link = buildMailto(
-        APP_CONFIG?.email,
-        "Dúvida - App Dr. Wevelin",
-        msg ? msg : "Olá! Tenho uma dúvida:"
-      );
-      if (!link) return alert("E-mail não configurado em data.js");
-      window.location.href = link;
-    });
-  }
-
-  if (btnSendWhats) {
-    btnSendWhats.addEventListener("click", () => {
-      const msg = (msgBox?.value || "").trim();
-      const link = buildWhatsLink(
-        APP_CONFIG?.whatsappNumber,
-        msg ? `Olá! Tenho uma dúvida:\n\n${msg}` : "Olá! Tenho uma dúvida:"
-      );
-      if (!link) return alert("WhatsApp não configurado em data.js");
-      window.open(link, "_blank");
-    });
-  }
+  $("#btnSendWhats")?.addEventListener("click", () => {
+    const msg = ($("#msgBox")?.value || "").trim();
+    const link = buildWhatsLink(APP_CONFIG?.whatsappNumber, msg ? `Olá! Tenho uma dúvida:\n\n${msg}` : "Olá! Tenho uma dúvida:");
+    if (!link) return alert("WhatsApp não configurado em data.js");
+    window.open(link, "_blank");
+  });
 
   // =========================
-  // Agendamento
+  // Agendamento (WhatsApp)
   // =========================
-  const btnAgendar = $("#btnAgendar");
-  if (btnAgendar) {
-    btnAgendar.addEventListener("click", () => {
-      const link = buildWhatsLink(APP_CONFIG?.schedulingWhatsappNumber, "Olá! Gostaria de agendar uma consulta.");
-      if (!link) return alert("WhatsApp de agendamento não configurado em data.js");
-      window.open(link, "_blank");
-    });
-  }
+  $("#btnAgendar")?.addEventListener("click", () => {
+    const link = buildWhatsLink(APP_CONFIG?.schedulingWhatsappNumber, "Olá! Gostaria de agendar uma consulta.");
+    if (!link) return alert("WhatsApp de agendamento não configurado em data.js");
+    window.open(link, "_blank");
+  });
 
   // =========================
-  // Admin (conteúdo local)
+  // Admin (salva conteúdo local)
   // =========================
   const modal = $("#adminModal");
   const gate = $("#adminGate");
@@ -297,7 +285,7 @@
   }
 
   function slugify(s) {
-    return String(s)
+    return String(s || "")
       .toLowerCase()
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
@@ -309,33 +297,38 @@
   function addItem(kind, title, tags, html) {
     if (!title || !html) return alert("Preencha título e conteúdo.");
     const local = ensureLocalContainer();
+    if (!Array.isArray(local[kind])) local[kind] = [];
+
     const id = slugify(title) + "-" + Date.now().toString(36);
-    const item = {
+    local[kind].push({
       id,
       title,
       tags: (tags || "").split(",").map((x) => x.trim()).filter(Boolean),
       updatedAt: new Date().toISOString().slice(0, 10),
       html
-    };
-    local[kind].push(item);
+    });
+
     saveLocal(local);
     refreshUI();
     alert("Adicionado!");
   }
 
   $("#btnAddTema")?.addEventListener("click", () => {
-    addItem("temas", $("#admTemaTitulo").value.trim(), $("#admTemaTags").value.trim(), $("#admTemaHtml").value.trim());
+    addItem("temas", $("#admTemaTitulo")?.value?.trim(), $("#admTemaTags")?.value?.trim(), $("#admTemaHtml")?.value?.trim());
     $("#admTemaTitulo").value = "";
     $("#admTemaTags").value = "";
     $("#admTemaHtml").value = "";
   });
 
   $("#btnAddTabela")?.addEventListener("click", () => {
-    addItem("tabelas", $("#admTabTitulo").value.trim(), $("#admTabTags").value.trim(), $("#admTabHtml").value.trim());
+    addItem("tabelas", $("#admTabTitulo")?.value?.trim(), $("#admTabTags")?.value?.trim(), $("#admTabHtml")?.value?.trim());
     $("#admTabTitulo").value = "";
     $("#admTabTags").value = "";
     $("#admTabHtml").value = "";
   });
+
+  // (opcional) se você quiser adicionar Laser via Admin depois:
+  // basta criar uma aba no HTML ou eu adiciono pra você.
 
   $("#btnExport")?.addEventListener("click", async () => {
     const local = ensureLocalContainer();
@@ -350,11 +343,10 @@
   });
 
   $("#btnImport")?.addEventListener("click", () => {
-    const raw = $("#backupBox").value.trim();
+    const raw = $("#backupBox")?.value?.trim();
     if (!raw) return alert("Cole um JSON válido primeiro.");
     try {
       const obj = JSON.parse(raw);
-      if (!obj || typeof obj !== "object") throw new Error("inválido");
       if (!Array.isArray(obj.temas)) obj.temas = [];
       if (!Array.isArray(obj.tabelas)) obj.tabelas = [];
       if (!Array.isArray(obj.laser)) obj.laser = [];
@@ -374,7 +366,7 @@
   });
 
   // =========================
-  // ACEITE DE TERMOS (bloqueio + 1ª abertura + data/hora)
+  // Termos (bloqueio + 1ª abertura + data/hora)
   // =========================
   const TERMS_KEY = "wevelin_terms_v1";
 
@@ -428,15 +420,14 @@
     showScreen("termos");
   }
 
-  // intercepta navegação (captura)
+  // Intercepta navegação (captura)
   document.querySelectorAll("[data-go]").forEach((btn) => {
     btn.addEventListener("click", requireTermsBeforeAction, true);
   });
 
-  // estado inicial
   lockMenuIfNeeded();
 
-  // 1ª abertura: força termos
+  // 1ª abertura: mostra termos
   if (!isTermsAccepted()) showScreen("termos");
 
   // UI do aceite
@@ -463,18 +454,13 @@
 
     button.addEventListener("click", () => {
       const payload = setTermsAccepted();
-
       checkbox.disabled = true;
       button.disabled = true;
       button.textContent = "Termos aceitos";
       if (status) status.textContent = `Aceito em: ${payload.acceptedAtText}`;
-
       lockMenuIfNeeded();
       alert("Obrigado! Agora você já pode acessar o conteúdo do app.");
       showScreen("home");
     });
   }
 })();
-
-
-
