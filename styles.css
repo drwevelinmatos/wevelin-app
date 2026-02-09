@@ -1,17 +1,18 @@
 :root{
-  --primary:#285A81;        /* azul da marca */
+  --primary:#285A81;
   --primary-2:#1F4766;
   --bg:#F7FAFC;
   --card:#FFFFFF;
   --line:#E7EEF4;
   --muted:#5B6B7A;
   --text:#0F172A;
-  --brand-soft:#BBE1E5;     /* azul-claro da capa do manual */
+  --brand-soft:#BBE1E5;
   --radius:18px;
   --shadow: 0 12px 30px rgba(2, 12, 27, .10);
 }
 
 *{ box-sizing:border-box; }
+
 body{
   margin:0;
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -23,6 +24,11 @@ h1,h2,.brand-title{
   font-family: Comfortaa, Inter, system-ui, sans-serif;
 }
 
+a{ color: inherit; }
+
+/* =========================
+   TOP BAR
+========================= */
 .topbar{
   position: sticky;
   top: 0;
@@ -38,7 +44,9 @@ h1,h2,.brand-title{
 
 .brand{ display:flex; gap:10px; align-items:center; }
 .brand-logo{
-  width:42px; height:42px; object-fit:contain;
+  width:42px;
+  height:42px;
+  object-fit:contain;
   border-radius: 12px;
   background:#fff;
   border:1px solid var(--line);
@@ -55,41 +63,63 @@ h1,h2,.brand-title{
   cursor:pointer;
 }
 
-.app{ max-width: 980px; margin: 0 auto; padding: 14px; }
+/* =========================
+   APP / SCREENS
+========================= */
+.app{
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 14px;
+}
 .screen{ display:none; }
 .screen.active{ display:block; }
 
+/* =========================
+   HOME (coluna em qualquer tela)
+========================= */
 .hero-card{
   background: rgba(255,255,255,.92);
   border:1px solid var(--line);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   overflow:hidden;
-  display:grid;
-  grid-template-columns: 1fr;
-}
-.hero-photo{
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  display:block;
-}
-.hero-info{ padding: 14px; }
 
+  display:flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 14px;
+}
+
+.hero-photo{
+  width: min(440px, 100%);
+  margin: 0 auto;
+  display:block;
+  border-radius: 18px;
+  object-fit: cover;
+  height: auto;
+}
+
+.hero-info{ padding: 0; }
+
+.hero-info h1{
+  margin: 6px 0 4px 0;
+  text-align: center;
+}
+
+.hero-info .muted{
+  text-align:center;
+}
+
+/* boxes em coluna (igual celular) */
 .grid-2{
   display:grid;
   grid-template-columns: 1fr;
   gap: 12px;
   margin-top: 12px;
 }
-@media (min-width: 760px){
-  .hero-card{ grid-template-columns: 360px 1fr; }
-  .hero-photo{ height: 100%; min-height: 360px; }
-  .grid-2{ grid-template-columns: 1fr 1fr; }
-}0
 
 .info-box{
-  0background: #fff;
+  background: #fff;
   border:1px solid var(--line);
   border-radius: 16px;
   padding: 12px;
@@ -97,15 +127,35 @@ h1,h2,.brand-title{
 .info-label{ color:var(--muted); font-size:12px; margin-bottom:6px; }
 .info-value{ line-height:1.35; }
 
+/* Link instagram premium */
+a.link{
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+a.link:hover{ text-decoration: underline; }
+
+/* =========================
+   MENU
+========================= */
 .menu{
   display:grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
   margin-top: 12px;
 }
+
 @media (min-width: 760px){
-  .menu{ grid-template-columns: repeat(4, 1fr); }
+  .menu{
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
+@media (min-width: 990px){
+  .menu{
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
 .menu-btn{
   border:1px solid var(--line);
   background: rgba(255,255,255,.92);
@@ -124,12 +174,16 @@ h1,h2,.brand-title{
 .menu-title{ font-weight: 700; font-family: Comfortaa, Inter, sans-serif; }
 .menu-sub{ color: var(--muted); font-size: 12px; margin-top: 2px; }
 
+/* =========================
+   HEADERS / LISTAS / CONTENT
+========================= */
 .screen-head{
   display:flex;
   align-items:flex-start;
   gap: 12px;
   margin: 6px 0 10px;
 }
+
 .back-btn{
   border:1px solid var(--line);
   background:#fff;
@@ -137,7 +191,9 @@ h1,h2,.brand-title{
   padding: 10px 12px;
   cursor:pointer;
 }
+
 .toolbar{ margin: 10px 0; }
+
 .search{
   width:100%;
   border:1px solid var(--line);
@@ -152,6 +208,7 @@ h1,h2,.brand-title{
   grid-template-columns: 1fr;
   gap: 10px;
 }
+
 .item{
   border:1px solid var(--line);
   background: rgba(255,255,255,.92);
@@ -171,6 +228,7 @@ h1,h2,.brand-title{
 }
 
 .label{ display:block; font-size:12px; color:var(--muted); margin-bottom:6px; }
+
 .textarea, .input{
   width:100%;
   border:1px solid var(--line);
@@ -180,7 +238,14 @@ h1,h2,.brand-title{
   background:#fff;
   font-family: inherit;
 }
-.row{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
+
+.row{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:10px;
+}
+
 .btn{
   border:none;
   background: var(--primary);
@@ -209,6 +274,7 @@ h1,h2,.brand-title{
 
 .content p{ margin: 10px 0; }
 .content ul{ margin: 10px 0 10px 18px; }
+
 .content table{
   width:100%;
   border-collapse: collapse;
@@ -223,6 +289,7 @@ h1,h2,.brand-title{
   vertical-align:top;
 }
 .content th{ background:#F3F7FA; }
+
 .content code{
   background:#F3F7FA;
   padding: 2px 6px;
@@ -230,7 +297,9 @@ h1,h2,.brand-title{
   border:1px solid var(--line);
 }
 
-/* Modal Admin */
+/* =========================
+   MODAL ADMIN
+========================= */
 .modal{
   position:fixed;
   inset:0;
@@ -242,6 +311,7 @@ h1,h2,.brand-title{
   z-index: 50;
 }
 .modal.show{ display:flex; }
+
 .modal-card{
   width:min(900px, 100%);
   background:#fff;
@@ -250,6 +320,7 @@ h1,h2,.brand-title{
   box-shadow: var(--shadow);
   overflow:hidden;
 }
+
 .modal-head{
   display:flex;
   align-items:center;
@@ -258,6 +329,7 @@ h1,h2,.brand-title{
   border-bottom:1px solid var(--line);
 }
 .modal-title{ font-family: Comfortaa, Inter, sans-serif; font-weight: 700; }
+
 .stack{ padding: 14px; display:grid; gap: 10px; }
 .hidden{ display:none; }
 
@@ -273,89 +345,3 @@ h1,h2,.brand-title{
   border-color: var(--primary);
   color: var(--primary);
 }
-/* ===== Foto responsiva (desktop maior, mobile igual) ===== */
-.hero-photo{
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: cover;
-}
-
-/* Desktop: card em 2 colunas com foto maior */
-@media (min-width: 990px){
-  .hero-card{
-    display: grid;
-    grid-template-columns: minmax(320px, 440px) 1fr; /* FOTO | TEXTO */
-    gap: 18px;
-    align-items: start;
-  }
-
-  .hero-photo{
-    width: 100%;
-    max-width: 440px;  /* aumenta o espaço da foto */
-    aspect-ratio: 3 / 4; /* mantém proporção “retrato” */
-    height: auto;
-    border-radius: 16px;
-  }
-}
-
-/* Mobile: mantém layout confortável */
-@media (max-width: 899px){
-  .hero-card{
-    display: block; /* ou flex-col, dependendo do seu CSS atual */
-  }
-
-  .hero-photo{
-    max-width: 100%;
-    aspect-ratio: 4 / 3; /* pode ajustar se preferir mais “wide” no celular */
-    border-radius: 16px;
-  }
-}
-/* ===== HOME: layout em coluna (igual ao celular) também no desktop ===== */
-.hero-card{
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-/* foto acima, central e com tamanho bonito no desktop */
-.hero-photo{
-  width: min(440px, 100%);
-  margin: 0 auto;
-  display: block;
-  border-radius: 18px;
-  object-fit: cover;
-}
-
-/* remove 2 colunas e empilha os boxes */
-.grid-2{
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-}
-
-/* título "Bem-vindo" e texto centralizados e elegantes */
-.hero-info h1{
-  margin: 6px 0 4px 0;
-  text-align: center;
-}
-
-.hero-info .muted{
-  text-align: center;
-}
-
-/* link do instagram com cara de link "premium" */
-a.link{
-  color: var(--primary, #285A81);
-  text-decoration: none;
-  font-weight: 600;
-}
-a.link:hover{
-  text-decoration: underline;
-}
-
-
-
-
-
-
