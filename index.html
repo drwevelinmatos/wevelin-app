@@ -34,88 +34,98 @@
 
   <main class="app">
     <!-- HOME -->
-    <section class="screen active" id="screen-home" data-title="Início">
-      <div class="hero">
-        <div class="hero-card">
-		<img class="hero-photo" src="assets/foto.jpg?v=2" alt="Foto da médica" />
-          <div class="hero-info">
-            <h1>Bem-vindo(a)</h1>
-			<p class="muted">Pediatria, Nutrologia e Cardiologia Pediátrica • Conteúdos educativos</p>
-            <p class="muted">
-              Aqui você encontra conteúdos e orientações gerais em pediatria, além de acesso rápido ao agendamento.
-            </p>
+<section class="screen active" id="screen-home" data-title="Início">
+  <div class="hero">
+    <div class="hero-card">
+      <img class="hero-photo" src="assets/foto.jpg?v=2" alt="Foto do Dr. Wevelin Matos" />
 
-            <div class="grid-2">
-              <div class="info-box">
-                <div class="info-label">Sobre mim</div>
-                <div class="info-value" id="aboutMe">
-                  <!-- Você pode editar em data.js -->
-                </div>
+      <div class="hero-info">
+        <h1>Bem-vindo(a)</h1>
+        <p class="muted">Pediatria, Nutrologia e Cardiologia Pediátrica • Conteúdos educativos</p>
+        <p class="muted">
+          Aqui você encontra conteúdos e orientações gerais em pediatria, além de acesso rápido ao agendamento.
+        </p>
+
+        <div class="grid-2">
+          <div class="info-box">
+            <div class="info-label">Sobre mim</div>
+            <div class="info-value" id="aboutMe">
+              <!-- Você pode editar em data.js -->
+            </div>
+          </div>
+
+          <div class="info-box">
+            <div class="info-label">Contato</div>
+            <div class="info-value">
+              <div>
+                <strong>Instagram:</strong>
+                <a id="instaLink" class="link"
+                   href="https://instagram.com/dr.wevelinmatos"
+                   target="_blank" rel="noopener noreferrer">
+                  @dr.wevelinmatos
+                </a>
               </div>
-
-              <div class="info-box">
-  			  <div class="info-label">Contato</div>
-  				<div class="info-value">
-    			<div><strong>Instagram:</strong>
-      			<a id="instaLink" class="link" href="https://instagram.com/dr.wevelinmatos" target="_blank" rel="noopener">
-        		@dr.wevelinmatos
-		   		</a>
-    		    <!-- <div><strong>E-mail:</strong> <span id="emailLabel"></span></div> -->
-				</div>
-  			  </div>
-			  </div>
-              
-        <nav class="menu">
-          <button class="menu-btn" data-go="temas">
-            <div class="menu-ico">📚</div>
-            <div class="menu-txt">
-              <div class="menu-title">Temas</div>
-              <div class="menu-sub">Artigos e orientações</div>
+              <!-- E-mail oculto:
+              <div><strong>E-mail:</strong> <span id="emailLabel"></span></div>
+              -->
             </div>
-          </button>
-
-          <button class="menu-btn" data-go="tabelas">
-            <div class="menu-ico">📊</div>
-            <div class="menu-txt">
-              <div class="menu-title">Tabelas</div>
-              <div class="menu-sub">Referências rápidas</div>
-            </div>
-          </button>
-
-		  <button class="menu-btn" data-go="laser">
-            <div class="menu-ico">🔦</div>
-  			<div class="menu-txt">
-    		  <div class="menu-title">Laserterapia</div>
-    		  <div class="menu-sub">Orientações e protocolos</div>
-  		  </div>
-	      </button>
-
-          <button class="menu-btn" data-go="duvidas">
-            <div class="menu-ico">💬</div>
-            <div class="menu-txt">
-              <div class="menu-title">Dúvidas</div>
-              <div class="menu-sub">Enviar mensagem</div>
-            </div>
-          </button>
-
-          <button class="menu-btn" data-go="agendamento">
-            <div class="menu-ico">📅</div>
-            <div class="menu-txt">
-              <div class="menu-title">Agendamento</div>
-              <div class="menu-sub">WhatsApp da clínica</div>
-            </div>
-          </button>
-	
-	  <button class="menu-btn" data-go="termos">
-  	    <div class="menu-ico">🛡️</div>
-  	    <div class="menu-txt">
-  	      <div class="menu-title">Aviso Legal</div>
-	      <div class="menu-sub">Termos e uso</div>
-  	  </div>
-	  </button>
-        </nav>
+          </div>
+        </div>
       </div>
-    </section>
+
+      <nav class="menu">
+        <button class="menu-btn" data-go="temas">
+          <div class="menu-ico">📚</div>
+          <div class="menu-txt">
+            <div class="menu-title">Temas</div>
+            <div class="menu-sub">Artigos e orientações</div>
+          </div>
+        </button>
+
+        <button class="menu-btn" data-go="tabelas">
+          <div class="menu-ico">📊</div>
+          <div class="menu-txt">
+            <div class="menu-title">Tabelas</div>
+            <div class="menu-sub">Referências rápidas</div>
+          </div>
+        </button>
+
+        <button class="menu-btn" data-go="laser">
+          <div class="menu-ico">🔦</div>
+          <div class="menu-txt">
+            <div class="menu-title">Laserterapia</div>
+            <div class="menu-sub">Orientações e aplicabilidades</div>
+          </div>
+        </button>
+
+        <button class="menu-btn" data-go="duvidas">
+          <div class="menu-ico">💬</div>
+          <div class="menu-txt">
+            <div class="menu-title">Dúvidas</div>
+            <div class="menu-sub">Enviar mensagem</div>
+          </div>
+        </button>
+
+        <button class="menu-btn" data-go="agendamento">
+          <div class="menu-ico">📅</div>
+          <div class="menu-txt">
+            <div class="menu-title">Agendamento</div>
+            <div class="menu-sub">WhatsApp da clínica</div>
+          </div>
+        </button>
+
+        <button class="menu-btn" data-go="termos">
+          <div class="menu-ico">🛡️</div>
+          <div class="menu-txt">
+            <div class="menu-title">Aviso Legal</div>
+            <div class="menu-sub">Termos e uso</div>
+          </div>
+        </button>
+      </nav>
+
+    </div>
+  </div>
+</section>
 
     <!-- TEMAS -->
     <section class="screen" id="screen-temas" data-title="Temas">
@@ -364,6 +374,7 @@
   <script src="app.js"></script>
 </body>
 </html>
+
 
 
 
