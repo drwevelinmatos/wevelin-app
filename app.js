@@ -463,4 +463,244 @@
       showScreen("home");
     });
   }
+
+/* =========================
+   MRPA • Wevelin-app (Tabelas)
+========================= */
+const MRPA_KEY = "wevelin_mrpa_v1";
+
+// Layout: Dia 1 = 2 medições (Clínica)
+// Dias 2–5 = 6 medições por dia (3 manhã + 3 noite) = 24 no total
+const MRPA_PLAN = [
+  { day: 1, type: "clinica", count: 2 },
+  { day: 2, type: "manha_noite", count: 6 },
+  { day: 3, type: "manha_noite", count: 6 },
+  { day: 4, type: "manha_noite", count: 6 },
+  { day: 5, type: "manha_noite", count: 6 },
+];
+
+document.addEventListener("DOMContentLoaded", () => {
+  mrpaRender();
+  mrpaBindAutoSave();
+  mrpaLoad();
+});
+
+function mrpaRender(){
+  const wrap = document.getElementById("mrpa_days");
+  if(!wrap) return;
+
+  let globalIndex = 1; // 1ª medição...24ª
+  wrap.innerHTML = "";
+
+  MRPA_PLAN.forEach(p => {
+    const dayId = `mrpa_day_${p.day}`;
+
+    let headerRight = `
+      <div class="field" style="max-width:190px;margin:0;">
+        <label>Data</label>
+        <input type="date" id="${dayId}_date" />
+      </div>
+    `;
+
+    let body = "";
+
+    if(p.type === "clinica"){
+      body += `<div class="mrpa-row">` +
+        Array.from({length: p.count}).map((_,i)=>{
+          const idx = globalIndex++;
+          return mrpaMeasureCard(p.day, idx);
+        }).join("") +
+      `</div>`;
+    } else {
+      // manhã: 3 / noite: 3
+      const morning = Array.from({length:3}).map(()=> mrpaMeasureCard(p.day, globalIndex++ )).join("");
+      const night   = Array.from({length:3}).map(()=> mrpaMeasureCard(p.day, globalIndex++ )).join("");
+
+      body += `
+        <div class="mrpa-row">
+          <div>
+            <div class="mrpa-block-title">☀️ Manhã</div>
+            ${morning}
+          </div>
+          <div>
+            <div class="mrpa-block-title">🌙 Noite</div>
+            ${night}
+          </div>
+          <div class="no-print" style="font-size:12px;color:var(--muted);padding-top:26px;">
+            Dica: preencha pelo menos 2 dias completos para ter melhor amostragem.
+          </div>
+        </div>
+      `;
+    }
+
+    wrap.insertAdjacentHTML("beforeend", `
+      <div class="mrpa-day" id="${dayId}">
+        <div class="day-title">
+          <strong>${p.day}º Dia ${p.type==="clinica" ? "– Clínica" : ""}</strong>
+          ${headerRight}
+        </div>
+        ${body}
+      </div>
+    `);
+  });
+}
+
+function mrpaMeasureCard(day, idx){
+  const base = `mrpa_d${day}_m${idx}`;
+  return `
+    <div class="mrpa-measure">
+      <div class="m-title">${idx}ª Medição</div>
+      <div class="mrpa-4">
+        <div class="field">
+          <label>Hora</label>
+          <input type="time" id="${base}_hora" />
+        </div>
+        <div class="field">
+          <label>Pulso</label>
+          <input type="number" id="${base}_pulso" min="0" />
+        </div>
+        <div class="field">
+          <label>PAS</label>
+          <input type="number" id="${base}_pas" min="0" />
+        </div>
+        <div class="field">
+          <label>PAD</label>
+          <input type="number" id="${base}_pad" min="0" />
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function mrpaBindAutoSave(){
+  const root = document.getElementById("mrpa");
+  if(!root) return;
+
+  root.addEventListener("input", () => mrpaSave(), { passive:true });
+}
+
+function mrpaCollect(){
+  const data = {
+    nome: val("mrpa_nome"),
+    dn: val("mrpa_dn"),
+    peso: val("mrpa_peso"),
+    altura: val("mrpa_altura"),
+    medico: val("mrpa_medico"),
+    clinica: val("mrpa_clinica"),
+    meds: val("mrpa_meds"),
+    days: {}
+  };
+
+  // datas dos dias
+  MRPA_PLAN.forEach(p=>{
+    data.days[p.day] = data.days[p.day] || {};
+    data.days[p.day].date = val(`mrpa_day_${p.day}_date`);
+  });
+
+  // medições 1..24
+  for(let idx=1; idx<=24; idx++){
+    // descobrir dia do idx (mantém id estável para salvar)
+    // (como geramos em sequência, guardamos só pelo idx)
+    data[`m${idx}`] = {
+      hora: valAny(`_m${idx}_hora`),
+      pulso: valAny(`_m${idx}_pulso`),
+      pas: valAny(`_m${idx}_pas`),
+      pad: valAny(`_m${idx}_pad`)
+    };
+  }
+  return data;
+}
+
+/* Helper: como os ids têm "mrpa_d{dia}_m{idx}_campo", buscamos por sufixo único "_m{idx}_campo" */
+function valAny(suffix){
+  const el = document.querySelector(`[id$="${suffix}"]`);
+  return el ? el.value : "";
+}
+function val(id){ const el=document.getElementById(id); return el? el.value : ""; }
+function setVal(id,v){ const el=document.getElementById(id); if(el) el.value = (v ?? ""); }
+
+function mrpaSave(){
+  try{
+    const payload = mrpaCollect();
+    localStorage.setItem(MRPA_KEY, JSON.stringify(payload));
+  }catch(e){}
+}
+
+function mrpaLoad(){
+  try{
+    const raw = localStorage.getItem(MRPA_KEY);
+    if(!raw) return;
+    const data = JSON.parse(raw);
+
+    setVal("mrpa_nome", data.nome);
+    setVal("mrpa_dn", data.dn);
+    setVal("mrpa_peso", data.peso);
+    setVal("mrpa_altura", data.altura);
+    setVal("mrpa_medico", data.medico);
+    setVal("mrpa_clinica", data.clinica);
+    setVal("mrpa_meds", data.meds);
+
+    MRPA_PLAN.forEach(p=>{
+      setVal(`mrpa_day_${p.day}_date`, data?.days?.[p.day]?.date || "");
+    });
+
+    for(let idx=1; idx<=24; idx++){
+      const m = data[`m${idx}`] || {};
+      // preencher por sufixo
+      const setBySuffix = (suffix, v) => {
+        const el = document.querySelector(`[id$="${suffix}"]`);
+        if(el) el.value = (v ?? "");
+      };
+      setBySuffix(`_m${idx}_hora`, m.hora);
+      setBySuffix(`_m${idx}_pulso`, m.pulso);
+      setBySuffix(`_m${idx}_pas`, m.pas);
+      setBySuffix(`_m${idx}_pad`, m.pad);
+    }
+  }catch(e){}
+}
+
+function mrpaClear(){
+  if(!confirm("Limpar todos os campos do MRPA?")) return;
+  localStorage.removeItem(MRPA_KEY);
+  location.hash = "#mrpa";
+  location.reload();
+}
+
+/* Download PDF = aciona modo impressão (usuário salva como PDF) */
+function mrpaPrint(){
+  mrpaSave();
+  window.print();
+}
+
+/* CSV simples (dados + 24 medições) */
+function mrpaExportCSV(){
+  mrpaSave();
+  const d = mrpaCollect();
+
+  const rows = [];
+  rows.push(["Nome", d.nome]);
+  rows.push(["Data Nasc", d.dn]);
+  rows.push(["Peso", d.peso]);
+  rows.push(["Altura", d.altura]);
+  rows.push(["Médico", d.medico]);
+  rows.push(["Clínica", d.clinica]);
+  rows.push(["Medicações", (d.meds||"").replace(/\n/g," | ")]);
+  rows.push([]);
+
+  rows.push(["Medição","Hora","PAS","PAD","Pulso"]);
+  for(let i=1;i<=24;i++){
+    const m = d[`m${i}`] || {};
+    rows.push([i, m.hora||"", m.pas||"", m.pad||"", m.pulso||""]);
+  }
+
+  const csv = rows.map(r => r.map(x => `"${String(x??"").replace(/"/g,'""')}"`).join(",")).join("\n");
+  const blob = new Blob([csv], {type:"text/csv;charset=utf-8"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `MRPA_${(d.nome||"paciente").replace(/\s+/g,"_")}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
 })();
+
