@@ -161,6 +161,60 @@
       <div id="listTabelas" class="list"></div>
     </section>
 
+	<!-- =========================
+     MRPA (TABELAS) • PueriCalc/Wevelin-app
+========================== -->
+<section class="card" id="mrpa">
+  <div class="mrpa-head">
+    <div>
+      <h2>MRPA – Pressão Arterial (Preenchimento)</h2>
+      <p class="muted">Preencha online e depois clique em “Baixar PDF” para salvar/imprimir.</p>
+    </div>
+
+    <div class="mrpa-actions">
+      <button class="btn" type="button" onclick="mrpaPrint()">Baixar PDF</button>
+      <button class="btn btn-ghost" type="button" onclick="mrpaExportCSV()">Baixar CSV</button>
+      <button class="btn btn-ghost" type="button" onclick="mrpaClear()">Limpar</button>
+    </div>
+  </div>
+
+  <!-- Dados gerais -->
+  <div class="mrpa-grid2">
+    <div class="field">
+      <label>Nome</label>
+      <input id="mrpa_nome" type="text" placeholder="Paciente" />
+    </div>
+    <div class="field">
+      <label>Data de nascimento</label>
+      <input id="mrpa_dn" type="date" />
+    </div>
+    <div class="field">
+      <label>Peso (kg)</label>
+      <input id="mrpa_peso" type="number" step="0.1" />
+    </div>
+    <div class="field">
+      <label>Altura (m)</label>
+      <input id="mrpa_altura" type="number" step="0.01" />
+    </div>
+    <div class="field">
+      <label>Médico</label>
+      <input id="mrpa_medico" type="text" placeholder="Dra. Wevelin Matos" />
+    </div>
+    <div class="field">
+      <label>Clínica</label>
+      <input id="mrpa_clinica" type="text" placeholder="Clínica" />
+    </div>
+  </div>
+
+  <div class="field" style="margin-top:10px;">
+    <label>Medicações em uso</label>
+    <textarea id="mrpa_meds" rows="3" placeholder="Escreva aqui..."></textarea>
+  </div>
+
+  <!-- Dias / medições -->
+  <div id="mrpa_days"></div>
+</section>
+ 
 	<!-- LASERTERAPIA -->
 <section class="screen" id="screen-laser" data-title="Laserterapia">
   <div class="screen-head">
@@ -374,6 +428,7 @@
   <script src="app.js"></script>
 </body>
 </html>
+
 
 
 
