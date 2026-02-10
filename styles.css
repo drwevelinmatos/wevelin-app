@@ -1,3 +1,4 @@
+<style>
 :root{
   --primary:#285A81;
   --primary-2:#1F4766;
@@ -345,98 +346,117 @@ a.link:hover{ text-decoration: underline; }
   border-color: var(--primary);
   color: var(--primary);
 }
-/* ===== MRPA ===== */
-#mrpa h2{ margin:0; font-family: Comfortaa, Inter, system-ui; color: var(--primary); }
-#mrpa .muted{ margin:6px 0 0; color: var(--muted); font-size: 13px; }
+/* =========================
+   MRPA (IMPRESSÃO 1 PÁGINA)
+========================= */
 
+.mrpa-wrap{ margin-top: 10px; }
 .mrpa-head{
-  display:flex; gap:12px; align-items:flex-start; justify-content:space-between;
-  margin-bottom: 12px;
+  display:flex; justify-content:space-between; align-items:flex-start; gap:12px;
+  padding: 8px 0 10px; border-bottom: 2px solid rgba(40,90,129,0.18);
 }
-.mrpa-actions{ display:flex; gap:8px; flex-wrap:wrap; }
+.mrpa-title{
+  font-family:'Comfortaa',cursive; font-weight:800; color:var(--primary);
+  font-size: 1.05rem; margin:0;
+}
+.mrpa-sub{ color:#52616d; font-size:0.78rem; margin-top:2px; }
+.mrpa-orient{
+  text-align:right; color:#52616d; font-size:0.75rem; line-height:1.25;
+  max-width: 340px;
+}
 
-.mrpa-grid2{
+.mrpa-toolbar{
+  display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;
+  margin-bottom: 10px;
+}
+.mrpa-toolbar .muted{ margin:0; }
+
+.mrpa-info{
+  margin-top:10px;
+  border:1px solid rgba(0,0,0,0.12);
+  border-radius: 12px;
+  padding: 10px;
+  background:#fff;
+}
+.mrpa-info-grid{
   display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap:10px;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 8px;
 }
-@media (max-width: 720px){
-  .mrpa-head{ flex-direction:column; }
-  .mrpa-grid2{ grid-template-columns: 1fr; }
+.mrpa-field .lbl{
+  font-size:0.72rem; font-weight:800; color:var(--primary); margin:0 0 4px;
+}
+.mrpa-field .box{
+  height: 22px;
+  border: 1.4px solid #000;
+  border-radius: 6px;
+  background:#fff;
 }
 
-.field label{
-  display:block; font-size:12px; color: var(--muted); margin: 0 0 6px;
+.mrpa-meds{
+  margin-top:10px;
+  border:1px solid rgba(0,0,0,0.12);
+  border-radius: 12px;
+  padding: 10px;
+  background:#fff;
 }
-.field input, .field textarea{
+.mrpa-meds .box{
+  height: 34px;
+  border: 1.4px solid #000;
+  border-radius: 8px;
+  background:#fff;
+}
+
+.mrpa-table{
   width:100%;
-  border:1px solid var(--line);
-  border-radius:12px;
-  padding:10px 12px;
-  background:#fff;
-  outline:none;
+  border-collapse: collapse;
+  margin-top:10px;
+  font-size: 0.72rem; /* bem compacto p/ 1 página */
 }
-.field input:focus, .field textarea:focus{
-  border-color: rgba(40,90,129,.45);
-  box-shadow: 0 0 0 3px rgba(40,90,129,.12);
+.mrpa-table th{
+  background: var(--primary);
+  color:#fff;
+  padding:6px;
+  border:1px solid #000;
+  font-weight:800;
 }
-
-/* Cards por dia */
-.mrpa-day{
-  margin-top:14px;
-  border:1px solid var(--line);
-  border-radius: 16px;
-  overflow:hidden;
-  background:#fff;
+.mrpa-table td{
+  border:1px solid #000;
+  padding:4px 5px;
+  vertical-align: middle;
 }
-.mrpa-day .day-title{
-  display:flex; justify-content:space-between; align-items:center;
-  padding:10px 12px;
-  background: linear-gradient(90deg, rgba(40,90,129,.08), rgba(187,225,229,.22));
-  border-bottom:1px solid var(--line);
-}
-.mrpa-day .day-title strong{ color: var(--primary); font-family: Comfortaa, Inter, system-ui; }
-
-.mrpa-row{
-  display:grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap:10px;
-  padding:12px;
-}
-@media (max-width: 860px){
-  .mrpa-row{ grid-template-columns: 1fr; }
+.mrpa-cell{
+  height: 18px; /* altura p/ escrever à caneta */
 }
 
-.mrpa-block-title{
-  display:flex; align-items:center; justify-content:space-between;
-  font-size: 13px; color: var(--primary);
-  margin: 6px 0 10px;
-  font-weight: 700;
+.mrpa-foot{
+  margin-top:10px;
+  padding-top:8px;
+  border-top:2px solid rgba(40,90,129,0.18);
+  display:flex;
+  justify-content:flex-end;
 }
-.mrpa-measure{
-  border:1px solid var(--line);
-  border-radius: 14px;
-  padding:10px;
+.mrpa-foot .sig{
+  text-align:right;
+  font-size:0.78rem;
+  color:#1f2d3a;
+  font-weight:700;
+  line-height:1.25;
 }
-.mrpa-measure .m-title{
-  font-size: 12px; font-weight:700; color: var(--primary);
-  margin-bottom:8px;
-}
-.mrpa-4{
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap:8px;
-}
-@media (max-width: 420px){
-  .mrpa-4{ grid-template-columns: 1fr; }
+.mrpa-foot .sig .mutedline{
+  font-weight:600; color:#52616d; font-size:0.75rem;
 }
 
-/* ===== Impressão (PDF) ===== */
+/* Mobile: só melhora visual no app (não impacta impressão) */
+@media (max-width: 900px){
+  .mrpa-info-grid{ grid-template-columns: 1fr 1fr; }
+  .mrpa-orient{ text-align:left; max-width:none; }
+}
+
+/* PRINT: 1 página A4 e SEM conflito */
 @media print{
+  @page{ size: A4 portrait; margin: 10mm; }
   body{ background:#fff !important; }
-  .nav, .tabs, .mrpa-actions, .no-print{ display:none !important; }
-  #mrpa{ box-shadow:none !important; }
   .card{ box-shadow:none !important; }
-  .mrpa-day{ break-inside: avoid; page-break-inside: avoid; }
 }
-
+</style>
